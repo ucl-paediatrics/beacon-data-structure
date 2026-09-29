@@ -2,7 +2,7 @@
 """Tests for the main module."""
 import polars as pl
 
-from main import main
+from export_data import main
 
 
 def test_main():
