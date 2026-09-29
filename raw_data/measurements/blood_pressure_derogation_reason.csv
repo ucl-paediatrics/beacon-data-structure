@@ -1,0 +1,2 @@
+person_id,measurement_datetime,measurement_concept_id,measurement_concept_name,value_source_value
+ste_1,2021-02-03T07:00:00,,Blood pressure derogation reason,NCO

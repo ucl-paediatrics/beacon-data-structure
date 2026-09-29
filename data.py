@@ -33,7 +33,7 @@ def load_visits_data() -> pl.DataFrame:
             "visit_start_datetime": pl.Datetime,
             "visit_end_datetime": pl.Datetime,
             "background_diagnoses": pl.String,
-        }, 
+        },
         separator=","  # Ensure that the separator is a comma
     ).with_columns(
         pl.col(
