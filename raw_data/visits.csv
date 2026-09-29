@@ -1,0 +1,13 @@
+person_id,visit_id,visit_start_datetime,visit_end_datetime,admission_type,visit_type,background_diagnoses
+ste_1,visit_1,2021-02-03T09:00:00,2021-02-05T09:00:00,Emergency,Inpatient,[]
+ste_1,visit_2,2024-06-05T09:00:00,2024-06-08T09:00:00,Emergency,Inpatient,[]
+ste_2,visit_3,2022-03-16T09:00:00,2022-03-20T09:00:00,Emergency,Inpatient,[]
+ste_2,visit_4,2025-02-20T09:00:00,2025-02-23T09:00:00,Emergency,Inpatient,[]
+ste_3,visit_5,2024-01-10T09:00:00,2024-01-12T09:00:00,Emergency,Inpatient,[128188000]
+ste_4,visit_6,2022-01-20T09:00:00,2022-01-24T09:00:00,Elective,Inpatient,[]
+ste_5,visit_7,2023-05-06T09:00:00,2023-05-09T09:00:00,Emergency,Inpatient,[]
+ste_6,visit_8,2025-08-02T09:00:00,2025-08-05T09:00:00,Emergency,Inpatient,[62067003]
+ste_7,visit_9,2025-01-14T09:00:00,2025-01-16T09:00:00,Emergency,Inpatient,[]
+ste_8,visit_10,2021-01-10T09:00:00,2021-01-11T09:00:00,Elective,Inpatient,[]
+ste_9,visit_11,2022-04-11T09:00:00,2022-04-17T09:00:00,Emergency,Inpatient,[]
+ste_10,visit_12,2025-11-20T09:00:00,2025-11-27T09:00:00,Emergency,Inpatient,[190905008]

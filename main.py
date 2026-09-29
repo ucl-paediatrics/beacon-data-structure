@@ -4,18 +4,31 @@ import logging
 
 import polars as pl
 
-import suppression
+import data
+from date_processing import calculate_admission_age
 
-PERSON = pl.read_csv("person_raw.csv")
+DAYS_PER_MONTH: float = 365.25 / 12
 
-def export():
+
+def main() -> pl.DataFrame:
     """Exports the suppressed person data."""
-    person_suppressed: pl.DataFrame = suppression.suppress_rare_categories(
-        df=PERSON,
-        specifications=suppression.SUPPRESSION_CONFIG["person"]
+    person = data.load_person_data()
+    visits = data.load_visits_data()
+
+    return visits.join(
+        other=person, on="person_id", how="left"
+    ).pipe(
+        calculate_admission_age
     )
 
-    return person_suppressed
+def anonymise():
+    """Anonymises the data, suppressing rare categories and removing identifiable information."""
+    # person_suppressed: pl.DataFrame = suppression.suppress_rare_categories(
+    #     df=person,
+    #     specifications=suppression.SUPPRESSION_CONFIG["person"]
+    # )
+
+    # return person_suppressed
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generate sample data for BEACON.")
@@ -24,4 +37,6 @@ if __name__ == "__main__":
 
     logging.basicConfig(level=args.log_level.upper())
 
-    suppressed = export()
+    joined: pl.DataFrame = main()
+
+    print(joined["background_diagnoses"].head(10))

@@ -6,7 +6,7 @@ import polars as pl
 
 SUPPRESSION_CONFIG = {
     "person": {
-        "ethnicity": (5, "Other"),
+        "ethnicity": (5, 'Y'),
         "preferred_language": (5, "Other"),
         "religion": (5, "Other"),
     }
@@ -22,7 +22,7 @@ def suppress_rare_category(
     new_value: str = "Other"
 ) -> pl.DataFrame:
     """Suppresses rare categories in a specified column of a DataFrame."""
-    counts = df[column].value_counts()
+    counts = df[column].value_counts().drop_nulls()
     rare_categories = counts.filter(pl.col("count") < threshold)[column].to_list()
     LOGGER.info(
         f"Rare categories in column '{column}': {rare_categories} suppressed to '{new_value}'"
