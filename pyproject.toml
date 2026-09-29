@@ -1,0 +1,15 @@
+[project]
+name = "beacon-data-structure"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "polars>=1.44.2",
+    "ruff>=0.16.9",
+]
+
+[tool.pylint]
+disable = [
+    "W1203",  # Use lazy % formatting in logging functions
+]

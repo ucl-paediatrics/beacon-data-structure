@@ -1,0 +1,11 @@
+person_id,gender,ethnicity,preferred_language,religion,imd_decile,imd_decile_version,DOB
+ste_1,M,A,English,Christian,1,2019,2020-01-15
+ste_2,F,B,Bengali,Muslim,3,2019,2018-05-22
+ste_3,M,A,English,null,1,2019,2023-07-30
+ste_4,F,A,English,Christian,2,2019,2021-11-05
+ste_5,M,B,Urdu,Muslim,4,2019,2022-03-10
+ste_6,F,A,English,Hindu,5,2019,2019-09-14
+ste_7,M,B,English,Christian,6,2019,2024-02-28
+ste_8,F,A,English,null,7,2019,2020-12-01
+ste_9,M,B,English,Muslim,8,2019,2021-06-17
+ste_10,F,A,English,Hindu,9,2019,2023-04-25
