@@ -32,9 +32,17 @@ def load_visits_data() -> pl.DataFrame:
         schema_overrides={
             "visit_start_datetime": pl.Datetime,
             "visit_end_datetime": pl.Datetime,
-        }
+            "background_diagnoses": pl.String,
+        }, 
+        separator=","  # Ensure that the separator is a comma
     ).with_columns(
-        pl.col(name="background_diagnoses").str.json_decode(pl.List(pl.Int64))
+        pl.col(
+            name="background_diagnoses"
+        ).str.replace(
+            pattern=';', value=','
+        ).str.json_decode(
+            dtype=pl.List(inner=pl.Int64)
+        )
     )
 
 def load_visit_details_data() -> pl.DataFrame:

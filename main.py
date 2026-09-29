@@ -43,7 +43,4 @@ if __name__ == "__main__":
 
     joined: pl.DataFrame = main()
 
-    print(joined.head(n=5))
-
-    for s in joined.schema:
-        print(f"{s}: {joined[s].dtype}")
+    print(joined['background_diagnoses'].head(10))
