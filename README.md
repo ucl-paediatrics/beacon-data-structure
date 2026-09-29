@@ -24,7 +24,7 @@ This data dictionary defines the *output* dictionary intended to be provided to 
 | `person_id`| string    | Foreign Key to Person table | None |
 | `age_at_presentation` | integer | Age in months on `visit_start_datetime` | Round down |
 | `visit_start_datetime` | datetime | Start of the period of care: presentation to emergency department or admission to ward | Censor to midnight on 1st of month, once used as datum for timings |
-| `visit_duration`| integer | Duration (in hours) of admission until discharge, transferred out, or mortality. | Calculated relative to `visit_start_datetime`; original timestamp for visit end discarded  |
+| `visit_end_datetime`| integer | Duration (in seconds) of admission until discharge, transferred out, or mortality. | Calculated relative to `visit_start_datetime`; original timestamp for visit end discarded  |
 | `admission_type` | ['Elective', 'Emergency'] | Category of admission | None |
 | `visit_type` | ['Inpatient', 'Day Case'] | Type of visit. Note that outpatient visits should not be included | None |
 | `background_diagnoses` | list[int] | Existing diagnoses at the point of admission (coded SNOMED diagnoses) | Amalgamation of rare diagnoses with < 20 entries in to higher SNOMED category. |
@@ -33,8 +33,16 @@ Discussion with contributing centres regarding diagnosis, specifically:
 * Provision in ICD-10 format if SNOMED not available
 * Precise anonymisation strategy based on prevalent demographics
 
+### Visit Details Table
+Each visit (see above) comprises one or more ward stays. Each ward stay is defined by a start and end time, and the ward in which the patient was located.
 
-<!-- TODO: diagnosis codes -->
+| Field name | Data type | Definition | Anonymisation Steps |
+| ---------- | --------- | ---------- | ------------------- |
+| `person_id` | string | Foreign Key to Person table | None |
+| `visit_id` | string | Foreign Key to Visits table | None |
+| `care_site` | string | Ward name or other identifier | None |
+| `visit_detail_start_datetime` | integer | Start of the stay on the particular ward - duration since `visit_start_datetime` | Converted to duration since `visit_start_datetime` and original timestamp discarded |
+| `visit_detail_end_datetime` | integer | End of the stay on the particular ward - duration since `visit_start_datetime` | Converted to duration since `visit_start_datetime` and original timestamp discarded |
  
 
 

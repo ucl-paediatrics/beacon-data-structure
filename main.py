@@ -14,11 +14,15 @@ def main() -> pl.DataFrame:
     """Exports the suppressed person data."""
     person = data.load_person_data()
     visits = data.load_visits_data()
+    visit_details = data.load_visit_details_data()
 
-    return visits.join(
-        other=person, on="person_id", how="left"
-    ).pipe(
-        calculate_admission_age
+    return visit_details.join(
+        other=visits.join(
+            other=person, on="person_id", how="left", coalesce=True
+        ).pipe(
+            calculate_admission_age
+        ),
+        on=["person_id", "visit_id"], how="left", coalesce=True
     )
 
 def anonymise():
@@ -39,4 +43,7 @@ if __name__ == "__main__":
 
     joined: pl.DataFrame = main()
 
-    print(joined["background_diagnoses"].head(10))
+    print(joined.head(n=5))
+
+    for s in joined.schema:
+        print(f"{s}: {joined[s].dtype}")
