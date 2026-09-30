@@ -5,7 +5,10 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "marimo>=0.25.0",
+    "matplotlib>=3.11.2",
     "polars>=1.44.2",
+    "seaborn>=0.13.2",
 ]
 
 [tool.pylint]
@@ -15,6 +18,20 @@ disable = [
 ]
 [tool.pylint.main]
 ignore=[".venv"]
+# Anchor module resolution at the repo root so relative imports in src/
+# resolve correctly when pylint lints a single file in isolation (as the
+# VS Code Pylint extension does).
+source-roots=["."]
+
+[tool.ty.environment]
+# src is a package (has __init__.py), not a src-layout root, so only the
+# project root should be searched for first-party modules.
+root = ["."]
+
+[tool.pytest.ini_options]
+# tests/ has no __init__.py, so pytest would otherwise add tests/ itself to
+# sys.path instead of the repo root, breaking `from src...` imports.
+pythonpath = ["."]
 
 [dependency-groups]
 dev = [

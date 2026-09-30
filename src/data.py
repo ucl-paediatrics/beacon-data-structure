@@ -12,7 +12,7 @@ import polars as pl
 
 # Don't include "None" as this might be a valid value in some columns, e.g. religion
 _NULL_VALUES = ["null", "NULL", ""]
-_RAW_DATA_DIR = Path(__file__).parent / "raw_data"
+_RAW_DATA_DIR = Path(__file__).parent.parent / "raw_data"
 
 
 def load_person_data() -> pl.DataFrame:
