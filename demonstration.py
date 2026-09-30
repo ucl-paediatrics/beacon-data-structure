@@ -15,9 +15,13 @@ def _():
     from matplotlib import pyplot as plt
     from matplotlib.patches import Patch
 
+    from src.data import _RAW_DATA_DIR as raw_data_dir
+    from src.data import load_measurement_data
     from src.export_data import load_visits
 
-    return Patch, load_visits, mo, pl, plt
+
+
+    return Patch, load_measurement_data, load_visits, mo, pl, plt, raw_data_dir
 
 
 @app.cell
@@ -93,6 +97,44 @@ def _(Patch, mo, pl, plt, visits: "pl.DataFrame"):
 
 
     mo.ui.matplotlib(axes=plot_visit_timeline(visits))
+    return
+
+
+@app.cell
+def _(load_measurement_data, mo, pl, raw_data_dir):
+    def list_datatypes_of_measurements():
+        """Lists the data types of all available measurements."""
+
+
+        available_measurements = [
+            f.stem for f in (raw_data_dir / 'measurements').iterdir()
+            if f.suffix == ".csv"
+            ]
+
+        dtypes = {}
+
+        for m in available_measurements:
+            match m:
+                case 'difficulty_breathing':
+                    output_type = pl.List(pl.String)
+                case 'capillary_filling' | 'pain_score':
+                    output_type = pl.String
+                case _:
+                    output_type = None
+            data = load_measurement_data(m, output_type=output_type)
+            dtypes[m] = data['value_source_value'].dtype
+
+            
+        return pl.DataFrame(data ={
+            'Measurement Type': dtypes.keys(),
+            'Value Type': [str(dtype) for dtype in dtypes.values()]
+        }).sort('Measurement Type')
+
+    mo.ui.table(
+        list_datatypes_of_measurements(),
+        selection=None,
+        pagination=False
+    )
     return
 
 
