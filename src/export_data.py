@@ -11,7 +11,7 @@ DAYS_PER_MONTH: float = 365.25 / 12
 def load_visits() -> pl.DataFrame:
     """Loads the visit detail, visit, and person data."""
     person = data.load_person_data()
-    visits = data.load_visits_data()
+    visits = data.load_visit_data()
     visit_details = data.load_visit_details_data()
 
     return visit_details.join(

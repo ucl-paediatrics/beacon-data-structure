@@ -20,11 +20,12 @@ def load_person_data() -> pl.DataFrame:
     return pl.read_csv(
         source=_RAW_DATA_DIR / "person.csv",
         null_values=_NULL_VALUES,
-    ).with_columns(
-        pl.col(name="date_of_birth").str.to_datetime(time_unit="ms")
+        schema_overrides={
+            'date_of_birth': pl.Datetime(time_unit='ms')
+        }
     )
 
-def load_visits_data() -> pl.DataFrame:
+def load_visit_data() -> pl.DataFrame:
     """Loads the visits data from a CSV file."""
     return pl.read_csv(
         source=_RAW_DATA_DIR / "visits.csv",
@@ -105,3 +106,13 @@ def load_measurement_data(measurement_type: str, output_type=None) -> pl.DataFra
                 raise ValueError(f"Output type '{output_type}' is not valid.")
 
     return data
+
+def load_outcome_data() -> pl.DataFrame:
+    """Loads the outcome data"""
+    return pl.read_csv(
+        source=_RAW_DATA_DIR / "outcomes.csv",
+        null_values=_NULL_VALUES,
+        schema_overrides={
+            'event_type': pl.String
+        }
+    )
