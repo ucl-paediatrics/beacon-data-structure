@@ -4,7 +4,6 @@ from typing import Any
 
 import polars as pl
 
-
 SUPPRESSION_CONFIG = {
     "person": {
         "ethnicity": (5, 'Y'),

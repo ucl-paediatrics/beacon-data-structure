@@ -19,7 +19,6 @@ def _(mo):
 @app.cell
 def _():
     import marimo as mo
-    import polars as pl
 
     from src import analysis, anonymisation, import_data, processing
 
@@ -87,9 +86,9 @@ def _(mo):
         - [x] `preferred_language`
         - [ ] `background_diagnoses`: Note - the logic here is not yet developed. TBC.
     * Extreme continuous values:
-        - [ ] `height`
-        - [ ] `weight`
-        - [ ] `bmi`
+        - [x] `height`
+        - [x] `weight`
+        - [x] `bmi`
     """)
     return
 
