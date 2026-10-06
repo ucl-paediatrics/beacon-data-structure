@@ -2,6 +2,8 @@
 
 This project creates sample data to demonstrate the intended data structure to be provided by collaborating sites to the BEACON project. 
 
+For an interactive version of the loading and anonymisation of the data, see the [demonstration notebook](https://molab.marimo.io/github/ucl-paediatrics/beacon-data-structure/blob/main/demonstration.py).
+
 ## Data Dictionary
 
 This data dictionary defines the *output* dictionary intended to be provided to BEACON. 
