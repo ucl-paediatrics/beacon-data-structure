@@ -1,2 +1,3 @@
 person_id,measurement_datetime,measurement_concept_id,measurement_concept_name,value_source_value
 ste_1,2021-02-03T07:00:00,4099154,Weight,9.5
+ste_3,2024-01-10T10:31:00,4099154,Weight,205

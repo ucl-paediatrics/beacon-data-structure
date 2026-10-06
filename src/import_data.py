@@ -12,27 +12,27 @@ import polars as pl
 
 # Don't include "None" as this might be a valid value in some columns, e.g. religion
 _NULL_VALUES = ["null", "NULL", ""]
-_RAW_DATA_DIR = Path(__file__).parent.parent / "raw_data"
+RAW_DATA_DIR = Path(__file__).parent.parent / "raw_data"
 
 
-def load_person_data() -> pl.DataFrame:
+def patients() -> pl.DataFrame:
     """Loads the person data from a CSV file."""
     return pl.read_csv(
-        source=_RAW_DATA_DIR / "person.csv",
+        source=RAW_DATA_DIR / "person.csv",
         null_values=_NULL_VALUES,
         schema_overrides={
             'date_of_birth': pl.Datetime(time_unit='ms')
         }
     )
 
-def load_visit_data() -> pl.DataFrame:
+def visits() -> pl.DataFrame:
     """Loads the visits data from a CSV file."""
     return pl.read_csv(
-        source=_RAW_DATA_DIR / "visits.csv",
+        source=RAW_DATA_DIR / "visits.csv",
         null_values=_NULL_VALUES,
         schema_overrides={
-            "visit_start_datetime": pl.Datetime,
-            "visit_end_datetime": pl.Datetime,
+            "visit_start_datetime": pl.Datetime('ms'),
+            "visit_end_datetime": pl.Datetime('ms'),
             "background_diagnoses": pl.String,
         },
         separator=","  # Ensure that the separator is a comma
@@ -46,18 +46,18 @@ def load_visit_data() -> pl.DataFrame:
         )
     )
 
-def load_visit_details_data() -> pl.DataFrame:
+def visit_details() -> pl.DataFrame:
     """Loads the visit details data from a CSV file."""
     return pl.read_csv(
-        source=_RAW_DATA_DIR / "visit_details.csv",
+        source=RAW_DATA_DIR / "visit_details.csv",
         null_values=_NULL_VALUES,
         schema_overrides={
-            "visit_detail_start_datetime": pl.Datetime,
-            "visit_detail_end_datetime": pl.Datetime,
+            "visit_detail_start_datetime": pl.Datetime('ms'),
+            "visit_detail_end_datetime": pl.Datetime('ms'),
         }
     )
 
-def load_measurement_data(measurement_type: str, output_type=None) -> pl.DataFrame:
+def measurement(measurement_type: str, output_type=None) -> pl.DataFrame:
     """Loads the measurement data from a CSV file.
 
     Args:
@@ -72,15 +72,15 @@ def load_measurement_data(measurement_type: str, output_type=None) -> pl.DataFra
     """
     try:
         data = pl.read_csv(
-            source=_RAW_DATA_DIR / "measurements" / f"{measurement_type}.csv",
+            source=RAW_DATA_DIR / "measurements" / f"{measurement_type}.csv",
             null_values=_NULL_VALUES,
             schema_overrides={
-                "measurement_datetime": pl.Datetime,
+                "measurement_datetime": pl.Datetime('ms'),
             }
         )
     except FileNotFoundError as exc:
         valid_measurements: list[str] = sorted([
-            path.stem for path in (_RAW_DATA_DIR / "measurements").glob("*.csv")
+            path.stem for path in (RAW_DATA_DIR / "measurements").glob("*.csv")
         ])
         raise ValueError(
             f"Measurement '{measurement_type}' is not valid. Choose one of: {valid_measurements}"
@@ -107,12 +107,13 @@ def load_measurement_data(measurement_type: str, output_type=None) -> pl.DataFra
 
     return data
 
-def load_outcome_data() -> pl.DataFrame:
+def outcomes() -> pl.DataFrame:
     """Loads the outcome data"""
     return pl.read_csv(
-        source=_RAW_DATA_DIR / "outcomes.csv",
+        source=RAW_DATA_DIR / "outcomes.csv",
         null_values=_NULL_VALUES,
         schema_overrides={
-            'event_type': pl.String
+            'event_type': pl.String,
+            'event_datetime': pl.Datetime(time_unit='ms')
         }
     )

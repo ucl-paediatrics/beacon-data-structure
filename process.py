@@ -2,9 +2,7 @@
 import argparse
 import logging
 
-import polars as pl
-
-from src.export_data import load_visits
+# import polars as pl
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generate sample data for BEACON.")
@@ -13,6 +11,4 @@ if __name__ == "__main__":
 
     logging.basicConfig(level=args.log_level.upper())
 
-    joined: pl.DataFrame = load_visits()
-
-    print(joined['background_diagnoses'].head(10))
+    print("Generating sample data for BEACON...")
